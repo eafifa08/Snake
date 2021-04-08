@@ -1,5 +1,6 @@
 import pygame
 import sys
+import Logic
 
 FPS = 60
 PATH_TO_DATABASE = "snake.sqlite"
@@ -18,9 +19,17 @@ for i in range(0, SCREEN_SIZE[1]):
     pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (0, i*CELL_SIZE), (SCREEN_SIZE[0], i*CELL_SIZE), 2)
 
 pygame.display.update()
+all_sprite = pygame.sprite.Group()
+snake = Logic.Snake(0, 0, 0, 0, 0, 0)
+all_sprite.add(snake)
 
 while True:
+    clock.tick(FPS)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+    all_sprite.update()
+    screen.fill(pygame.color.THECOLORS['black'])
+    all_sprite.draw(screen)
+    pygame.display.flip()
