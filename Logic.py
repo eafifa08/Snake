@@ -30,7 +30,6 @@ class Field:
         self.something_good_min = 0
 
 
-
 class Something:
     pass
 
