@@ -1,5 +1,7 @@
 import pygame
 
+WIDTH = 200
+
 
 class Snake(pygame.sprite.Sprite):
     def __init__(self, name, length, life, speed, armor, resizable):
@@ -32,6 +34,10 @@ class Snake(pygame.sprite.Sprite):
         if keystate[pygame.K_RIGHT]:
             self.speed = 8
         self.rect.x += self.speed
+        if self.rect.right > WIDTH:
+            self.rect.right = WIDTH
+        if self.rect.left < 0:
+            self.rect.left = 0
 
 
 class Field:
