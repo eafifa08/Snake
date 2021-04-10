@@ -1,10 +1,11 @@
 import pygame
 
-WIDTH = 200
+WIDTH = 400
+HEIGHT = 400
 
 
 class Snake(pygame.sprite.Sprite):
-    def __init__(self, name, length, life, speed, armor, resizable):
+    def __init__(self, name, length, life, speed, armor, resizable, direction):
         """
         Змея
         :param name: имя
@@ -19,26 +20,45 @@ class Snake(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = 20
         self.rect.bottom = 20
+        self.direction = 'down'
         self.name = name
         self.length = length
         self.life = life
-        self.speed = speed
+        self.speed_x = 0
+        self.speed_y = 1
         self.armor = armor
         self.resizable = resizable
 
+
     def update(self):
-        self.speed = 0
+        #self.speed = 0
         keystate = pygame.key.get_pressed()
         if keystate[pygame.K_LEFT]:
-            self.speed = -8
+            self.speed_x = -1
+            self.speed_y = 0
+            self.direction = 'left'
         if keystate[pygame.K_RIGHT]:
-            self.speed = 8
-        self.rect.x += self.speed
+            self.speed_x = 1
+            self.speed_y = 0
+            self.direction = 'right'
+        if keystate[pygame.K_DOWN]:
+            self.speed_y = 1
+            self.speed_x = 0
+            self.direction = 'down'
+        if keystate[pygame.K_UP]:
+            self.speed_y = -1
+            self.speed_x = 0
+            self.direction = 'up'
+        self.rect.x += self.speed_x
+        self.rect.y += self.speed_y
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
-
+        if self.rect.top < 0:
+            self.rect.top = 0
+        if self.rect.bottom > HEIGHT:
+            self.rect.bottom = HEIGHT
 
 class Field:
     def __init__(self, size, dangerous_walls, something_good_max):
@@ -54,8 +74,9 @@ class Field:
         self.something_good_min = 0
 
 
-class Something:
-    pass
+class Food(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
 
 
 class GameRound:

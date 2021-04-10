@@ -4,7 +4,7 @@ import Logic
 
 FPS = 60
 PATH_TO_DATABASE = "snake.sqlite"
-SCREEN_SIZE = (200, 200)
+SCREEN_SIZE = (400, 400)
 CELL_SIZE = 20
 
 pygame.init()
@@ -20,7 +20,7 @@ for i in range(0, SCREEN_SIZE[1]):
 
 pygame.display.update()
 all_sprite = pygame.sprite.Group()
-snake = Logic.Snake(0, 0, 0, 0, 0, 0)
+snake = Logic.Snake(0, 0, 0, 0, 0, 0, 0)
 all_sprite.add(snake)
 
 while True:
