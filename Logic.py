@@ -15,17 +15,17 @@ class Snake(pygame.sprite.Sprite):
         :param armor: броня
         """
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 40))
+        self.image = pygame.Surface((20, 20))
         self.image.fill(pygame.color.THECOLORS['green'])
         self.rect = self.image.get_rect()
-        self.rect.centerx = 20
-        self.rect.bottom = 20
+        self.rect.centerx = 0
+        self.rect.bottom = 0
         self.direction = 'down'
         self.name = name
         self.length = length
         self.life = life
         self.speed_x = 0
-        self.speed_y = 1
+        self.speed_y = 0
         self.armor = armor
         self.resizable = resizable
 
@@ -34,19 +34,19 @@ class Snake(pygame.sprite.Sprite):
         #self.speed = 0
         keystate = pygame.key.get_pressed()
         if keystate[pygame.K_LEFT]:
-            self.speed_x = -1
+            self.speed_x = -5
             self.speed_y = 0
             self.direction = 'left'
         if keystate[pygame.K_RIGHT]:
-            self.speed_x = 1
+            self.speed_x = 5
             self.speed_y = 0
             self.direction = 'right'
         if keystate[pygame.K_DOWN]:
-            self.speed_y = 1
+            self.speed_y = 5
             self.speed_x = 0
             self.direction = 'down'
         if keystate[pygame.K_UP]:
-            self.speed_y = -1
+            self.speed_y = -5
             self.speed_x = 0
             self.direction = 'up'
         self.rect.x += self.speed_x
@@ -77,6 +77,22 @@ class Field:
 class Food(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((20, 20))
+        self.image.fill(pygame.color.THECOLORS['blue'])
+        self.rect = self.image.get_rect()
+        self.rect.centerx = 300
+        self.rect.bottom = 300
+        self.eaten = False
+
+
+    def update(self, snake):
+        if(self.rect.left >= snake.rect.left and self.rect.top >= snake.rect.top
+                and self.rect.right <= snake.rect.right and self.rect.bottom <= snake.rect.bottom):
+            self.eaten = True
+            self.kill()
+
+
+
 
 
 class GameRound:
