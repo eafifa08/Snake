@@ -28,6 +28,7 @@ class Snake(pygame.sprite.Sprite):
         self.speed_y = 0
         self.armor = armor
         self.resizable = resizable
+        self.eaten = 0
 
 
     def update(self):
@@ -89,6 +90,7 @@ class Food(pygame.sprite.Sprite):
         if(self.rect.left >= snake.rect.left and self.rect.top >= snake.rect.top
                 and self.rect.right <= snake.rect.right and self.rect.bottom <= snake.rect.bottom):
             self.eaten = True
+            snake.eaten += 1
             self.kill()
 
 
