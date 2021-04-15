@@ -2,10 +2,11 @@ import pygame
 import sys
 import Logic
 
-FPS = 5
+FPS = 10
 PATH_TO_DATABASE = "snake.sqlite"
 SCREEN_SIZE = (400, 400)
 CELL_SIZE = 20
+MAX_FOOD = 3
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -22,9 +23,10 @@ pygame.display.update()
 all_sprite = pygame.sprite.Group()
 food_sprite = pygame.sprite.Group()
 snake = Logic.Snake(0, 0, 0, 0, 0, 0, 0)
-food = Logic.Food()
-
-food_sprite.add(food)
+foods = []
+for i in range(MAX_FOOD):
+    foods.append(Logic.Food())
+    food_sprite.add(foods[i])
 all_sprite.add(snake)
 while True:
     clock.tick(FPS)
@@ -32,8 +34,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-    if food.eaten == True:
-        print('')
     all_sprite.update()
     food_sprite.update(snake)
 

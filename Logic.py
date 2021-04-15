@@ -1,4 +1,5 @@
 import pygame
+import random
 
 WIDTH = 400
 HEIGHT = 400
@@ -78,11 +79,11 @@ class Field:
 class Food(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((20, 20))
+        self.image = pygame.Surface((10, 10))
         self.image.fill(pygame.color.THECOLORS['blue'])
         self.rect = self.image.get_rect()
-        self.rect.centerx = 300
-        self.rect.bottom = 300
+        self.rect.centerx = random.randint(0, 400)
+        self.rect.bottom = random.randint(0, 400)
         self.eaten = False
 
 
@@ -91,6 +92,7 @@ class Food(pygame.sprite.Sprite):
                 and self.rect.right <= snake.rect.right and self.rect.bottom <= snake.rect.bottom):
             self.eaten = True
             snake.eaten += 1
+            print('food eaten')
             self.kill()
 
 
