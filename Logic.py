@@ -85,6 +85,7 @@ class Food(pygame.sprite.Sprite):
         self.rect.centerx = random.randint(0, 400)
         self.rect.bottom = random.randint(0, 400)
         self.eaten = False
+        self.deleted = False
 
 
     def update(self, snake):
