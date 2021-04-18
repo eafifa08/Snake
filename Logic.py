@@ -7,7 +7,7 @@ CELL_SIZE = 20
 
 
 class Snake(pygame.sprite.Sprite):
-    def __init__(self, name, length, life, speed, armor, resizable, direction):
+    def __init__(self, name, length, life, speed, armor, resizable, direction, coordinates):
         """
         Змея
         :param name: имя
@@ -31,15 +31,9 @@ class Snake(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         #self.image.fill(pygame.color.THECOLORS['green'])
         self.direction = 'down'
-        self.name = name
-        self.length = length
-        self.life = life
         self.speed_x = 0
         self.speed_y = 0
-        self.armor = armor
-        self.resizable = resizable
         self.eaten = 0
-
 
 
     def update(self, direction):
@@ -111,10 +105,3 @@ class Food(pygame.sprite.Sprite):
             snake.eaten += 1
             print('food eaten')
             self.kill()
-
-
-
-
-
-class GameRound:
-    pass

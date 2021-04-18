@@ -5,7 +5,7 @@ import Logic
 
 FPS = 2
 PATH_TO_DATABASE = "snake.sqlite"
-SCREEN_SIZE = (400, 400)
+SCREEN_SIZE = WIDTH, HEIGHT = (400, 400)
 CELL_SIZE = 20
 MAX_FOOD = 1
 ROUND_MAX_FOOD = 3
@@ -22,16 +22,16 @@ def set_difficulty(value, difficulty):
 def start_the_game(ROUND_MAX_FOOD):
     print('play button')
     # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    coordinates = [[0 for j in range(0, HEIGHT//CELL_SIZE)] for i in range(0, WIDTH//CELL_SIZE)]
     screen.fill(pygame.color.THECOLORS['grey'])
     for i in range(0, SCREEN_SIZE[0]):
         pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (i * CELL_SIZE, 0), (i * CELL_SIZE, SCREEN_SIZE[1]), 2)
     for i in range(0, SCREEN_SIZE[1]):
         pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (0, i * CELL_SIZE), (SCREEN_SIZE[0], i * CELL_SIZE), 2)
-
     pygame.display.update()
     all_sprite = pygame.sprite.Group()
     food_sprite = pygame.sprite.Group()
-    snake = Logic.Snake(0, 3, 0, 0, 0, 0, 0)
+    snake = Logic.Snake(0, 3, 0, 0, 0, 0, 0, coordinates)
     foods = []
     for i in range(MAX_FOOD):
         foods.append(Logic.Food())
