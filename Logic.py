@@ -23,6 +23,7 @@ class Snake:
                                   [game_settings.screen_width // 2 // game_settings.cell_size+1,game_settings.screen_height // 2 // game_settings.cell_size],
                                   [game_settings.screen_width // 2 // game_settings.cell_size + 2,game_settings.screen_height // 2 // game_settings.cell_size]]
         self.head_coordinates = []
+        self.tail_coordinates = []
         print(self.coordinates_snake)
         for i in range(game_settings.screen_width//game_settings.cell_size):
             print(self.coordinates[i])
@@ -51,9 +52,15 @@ class Snake:
                 self.speed_y = -20
                 self.speed_x = 0
                 self.direction = 'up'
+                self.tail_coordinates = [self.coordinates_snake[self.length-1][0],
+                                         self.coordinates_snake[self.length-1][1]]
                 self.head_coordinates = [self.coordinates_snake[0][0],
                                          self.coordinates_snake[0][1]-1]
                 self.coordinates_snake = [self.head_coordinates] + self.coordinates_snake[:self.length-1]
+                if self.eaten > 0:
+                    self.length += 1
+                    self.coordinates_snake.append(self.tail_coordinates[:])
+                    self.eaten = 0
         if direction == 'down':
             if self.direction != 'up':
                 self.speed_y = 20
