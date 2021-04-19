@@ -45,22 +45,24 @@ class Snake:
                            self.coordinates_snake[i][1]*self.game_settings.cell_size,
                             self.game_settings.cell_size, self.game_settings.cell_size))
 
-    def update(self, direction):
+    def grow_up(self):
+        if self.eaten > 0:
+            self.tail_coordinates = [self.coordinates_snake[self.length - 1][0],
+                                     self.coordinates_snake[self.length - 1][1]]
+            self.length += 1
+            self.coordinates_snake.append(self.tail_coordinates[:])
+            self.eaten = 0
 
+    def update(self, direction):
         if direction == 'up':
             if self.direction != 'down':
                 self.speed_y = -20
                 self.speed_x = 0
                 self.direction = 'up'
-                self.tail_coordinates = [self.coordinates_snake[self.length-1][0],
-                                         self.coordinates_snake[self.length-1][1]]
+
                 self.head_coordinates = [self.coordinates_snake[0][0],
                                          self.coordinates_snake[0][1]-1]
                 self.coordinates_snake = [self.head_coordinates] + self.coordinates_snake[:self.length-1]
-                if self.eaten > 0:
-                    self.length += 1
-                    self.coordinates_snake.append(self.tail_coordinates[:])
-                    self.eaten = 0
         if direction == 'down':
             if self.direction != 'up':
                 self.speed_y = 20
@@ -98,14 +100,16 @@ class Snake:
             self.rect.bottom = self.game_settings.screen_height
 
         print('head_coordinates=' + str(self.head_coordinates))
+        self.grow_up()
         self.blitme()
 
 
 class Food(pygame.sprite.Sprite):
     def __init__(self, game_settings):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((10, 10))
-        self.image.fill(pygame.color.THECOLORS['blue'])
+        self.image = pygame.image.load('media\\apple_red.png').convert_alpha()
+        #self.image = pygame.Surface((10, 10))
+        #self.image.fill(pygame.color.THECOLORS['blue'])
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, game_settings.screen_width) // game_settings.cell_size * game_settings.cell_size
         self.rect.y = random.randint(0, game_settings.screen_height) // game_settings.cell_size * game_settings.cell_size
@@ -113,7 +117,6 @@ class Food(pygame.sprite.Sprite):
         print('food_coordinates='+ str(self.coordinates))
         self.eaten = False
         self.deleted = False
-
 
     def update(self, snake):
         #if(self.rect.left >= snake.rect.left and self.rect.top >= snake.rect.top
