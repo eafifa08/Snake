@@ -7,7 +7,8 @@ class Settings():
         self.fps = 4
         self.cell_size = 20
         self.max_food = 1
-        self.round_max_food = 20
-
+        self.round_max_food = 10
         self.green = (19, 71, 27)
+        self.fpss = [self.fps, self.fps * 2, self.fps * 3]
+
 
