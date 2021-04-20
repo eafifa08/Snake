@@ -14,6 +14,14 @@ screen = pygame.display.set_mode((game_settings.screen_width, game_settings.scre
 def set_difficulty(value, difficulty):
     pass
 
+def show_stats(snake):
+    pygame.font.init()  # you have to call this at the start,
+    # if you want to use this module.
+    myfont = pygame.font.SysFont('Comic Sans MS', 20)
+    eaten = myfont.render(' eaten: '+str(snake.eaten), True, (0, 0, 0))
+    screen.blit(eaten, (0, 0))
+    length = myfont.render(' length: ' + str(snake.length), True, (0, 0, 0))
+    screen.blit(length, (0, 30))
 
 def start_the_game():
     pygame.mouse.set_visible(False)
@@ -21,10 +29,10 @@ def start_the_game():
     # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     coordinates = [[0 for j in range(0, game_settings.screen_width // game_settings.cell_size)] for i in range(0, game_settings.screen_height // game_settings.cell_size)]
     screen.fill(pygame.color.THECOLORS['grey'])
-    for i in range(0, game_settings.screen_width):
-        pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (i * game_settings.cell_size, 0), (i * game_settings.cell_size,  game_settings.screen_height), 2)
-    for i in range(0, game_settings.screen_height):
-        pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (0, i * game_settings.cell_size), ( game_settings.screen_width, i * game_settings.cell_size), 2)
+    #for i in range(0, game_settings.screen_width):
+    #    pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (i * game_settings.cell_size, 0), (i * game_settings.cell_size,  game_settings.screen_height), 2)
+    #for i in range(0, game_settings.screen_height):
+    #    pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (0, i * game_settings.cell_size), ( game_settings.screen_width, i * game_settings.cell_size), 2)
 
     food_sprite = pygame.sprite.Group()
     snake = Logic.Snake(game_settings, screen, coordinates)
@@ -56,16 +64,17 @@ def start_the_game():
                     direction = 'right'
 
         screen.fill(pygame.color.THECOLORS['grey'])
-        for i in range(0, game_settings.screen_width):
-            pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (i * game_settings.cell_size, 0),
-                             (i * game_settings.cell_size, game_settings.screen_height), 2)
-        for i in range(0, game_settings.screen_height):
-            pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (0, i * game_settings.cell_size),
-                             (game_settings.screen_width, i * game_settings.cell_size), 2)
+        #for i in range(0, game_settings.screen_width):
+        #    pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (i * game_settings.cell_size, 0),
+        #                     (i * game_settings.cell_size, game_settings.screen_height), 2)
+        #for i in range(0, game_settings.screen_height):
+        #    pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (0, i * game_settings.cell_size),
+        #                     (game_settings.screen_width, i * game_settings.cell_size), 2)
 
         snake.update(direction)
         food_sprite.update(snake)
         food_sprite.draw(screen)
+        show_stats(snake)
         pygame.display.flip()
         pygame.display.update()
         for i in range(0, len(foods)):

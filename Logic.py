@@ -40,7 +40,7 @@ class Snake:
     def blitme(self):
        # self.screen.blit(self.image, self.rect)
        for i in range (self.length):
-            pygame.draw.rect(self.screen, pygame.color.THECOLORS['green'],
+            pygame.draw.rect(self.screen, self.game_settings.green,
                              pygame.Rect(self.coordinates_snake[i][0]*self.game_settings.cell_size,
                            self.coordinates_snake[i][1]*self.game_settings.cell_size,
                             self.game_settings.cell_size, self.game_settings.cell_size))
