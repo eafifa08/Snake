@@ -1,3 +1,6 @@
+import pygame
+
+
 class Settings():
     """Класс для хранения настроек игры Snake"""
     def __init__(self):
@@ -10,5 +13,6 @@ class Settings():
         self.round_max_food = 10
         self.green = (19, 71, 27)
         self.fpss = [self.fps, self.fps * 2, self.fps * 3]
+
 
 

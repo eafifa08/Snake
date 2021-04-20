@@ -108,6 +108,9 @@ class Snake:
 class Food(pygame.sprite.Sprite):
     def __init__(self, game_settings):
         pygame.sprite.Sprite.__init__(self)
+        pygame.init()
+        self.apple_sound = pygame.mixer.Sound('media\\apple_sound.wav')
+        self.game_settings = game_settings
         self.image = pygame.image.load('media\\apple_red.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, game_settings.screen_width) // game_settings.cell_size * game_settings.cell_size
@@ -122,6 +125,7 @@ class Food(pygame.sprite.Sprite):
         for c in snake.coordinates_snake:
             if [c[0], c[1]] == self.coordinates:
                 self.eaten = True
+                self.apple_sound.play()
                 snake.eaten += 1
                 snake.want_to_grow += 1
                 print('food eaten')

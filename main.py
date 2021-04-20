@@ -11,6 +11,7 @@ pygame.display.set_caption('Snake')
 screen = pygame.display.set_mode((game_settings.screen_width, game_settings.screen_height))
 
 
+
 def set_difficulty(value, difficulty):
     pass
 
