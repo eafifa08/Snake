@@ -8,17 +8,22 @@ class Snake:
         self.screen = screen
         self.length = 3
         self.direction = 'down'
-        self.coordinates_snake = [[game_settings.screen_width // 2 // game_settings.cell_size,
-                                   game_settings.screen_height // 2 // game_settings.cell_size, self.direction],
-                                  [game_settings.screen_width // 2 // game_settings.cell_size + 1,
-                                   game_settings.screen_height // 2 // game_settings.cell_size, self.direction],
-                                  [game_settings.screen_width // 2 // game_settings.cell_size + 2,
-                                   game_settings.screen_height // 2 // game_settings.cell_size, self.direction]]
+        self.coordinates_snake = []
+        self.set_coordinates_snake_center()
         self.head_coordinates = []
         self.tail_coordinates = []
-        print(self.coordinates_snake)
         self.eaten = 0
         self.want_to_grow = 0
+        self.life = 3
+
+    def set_coordinates_snake_center(self):
+        self.length = 3
+        self.coordinates_snake = [[self.game_settings.screen_width // 2 // self.game_settings.cell_size,
+                                   self.game_settings.screen_height // 2 // self.game_settings.cell_size, self.direction],
+                                  [self.game_settings.screen_width // 2 // self.game_settings.cell_size + 1,
+                                   self.game_settings.screen_height // 2 // self.game_settings.cell_size, self.direction],
+                                  [self.game_settings.screen_width // 2 // self.game_settings.cell_size + 2,
+                                   self.game_settings.screen_height // 2 // self.game_settings.cell_size, self.direction]]
 
     def blitme(self):
         if self.direction == 'up':
@@ -53,16 +58,20 @@ class Snake:
             self.want_to_grow = 0
 
     def move_snake(self, direction):
-        if direction == 'up' and self.coordinates_snake[0][1] >= 1:
-            if self.direction != 'down':
-                self.direction = 'up'
-                self.head_coordinates = [self.coordinates_snake[0][0],
-                                         self.coordinates_snake[0][1] - 1, self.direction]
-                self.coordinates_snake = [self.head_coordinates] + self.coordinates_snake[:self.length - 1]
+        if direction == 'up':
+            if self.coordinates_snake[0][1] >= 1:
+                if self.direction != 'down':
+                    self.direction = 'up'
+                    self.head_coordinates = [self.coordinates_snake[0][0],
+                                             self.coordinates_snake[0][1] - 1, self.direction]
+                    self.coordinates_snake = [self.head_coordinates] + self.coordinates_snake[:self.length - 1]
+                else:
+                    self.head_coordinates = [self.coordinates_snake[0][0],
+                                             self.coordinates_snake[0][1] + 1, self.direction]
+                    self.coordinates_snake = [self.head_coordinates] + self.coordinates_snake[:self.length - 1]
             else:
-                self.head_coordinates = [self.coordinates_snake[0][0],
-                                         self.coordinates_snake[0][1] + 1, self.direction]
-                self.coordinates_snake = [self.head_coordinates] + self.coordinates_snake[:self.length - 1]
+                self.life -= 1
+                self.set_coordinates_snake_center()
         if direction == 'down' and self.coordinates_snake[0][1] <= \
                 self.game_settings.screen_height//self.game_settings.cell_size-2:
             if self.direction != 'up':
@@ -102,7 +111,6 @@ class Snake:
         self.move_snake(direction)
         self.grow_up()
         self.blitme()
-        print(self.coordinates_snake)
 
 
 class Food(pygame.sprite.Sprite):

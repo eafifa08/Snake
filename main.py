@@ -24,6 +24,8 @@ def show_stats(snake, round_count):
     screen.blit(eaten, (0, 30))
     length = myfont.render(' length: ' + str(snake.length), True, (0, 0, 0))
     screen.blit(length, (0, 60))
+    life = myfont.render(' life: '+ str(snake.life), True, (0, 0, 0))
+    screen.blit(life, (0, 90))
 
 
 def draw_lines(is_drawing_lines):
@@ -69,6 +71,7 @@ def start_the_round(round_count):
         screen.fill(pygame.color.THECOLORS['grey'])
         draw_lines(False)
         snake.update(direction)
+        direction = snake.direction
         food_sprite.update(snake)
         food_sprite.draw(screen)
         show_stats(snake, round_count)
