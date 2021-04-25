@@ -57,6 +57,16 @@ class Snake:
             self.coordinates_snake.append(self.tail_coordinates[:])
             self.want_to_grow = 0
 
+    def check_coordinates_and_borders(self):
+        if self.coordinates_snake[0][0] < 0 or \
+                self.coordinates_snake[0][0] > self.game_settings.screen_width // self.game_settings.cell_size - 1 or \
+                self.coordinates_snake[0][1] < 0 or \
+                self.coordinates_snake[0][1] > self.game_settings.screen_height // self.game_settings.cell_size - 1:
+            self.life -= 1
+            return False
+        else:
+            return True
+
     def move_snake(self, direction):
         if direction == 'up':
             if self.coordinates_snake[0][1] >= 1:
@@ -108,6 +118,7 @@ class Snake:
                 self.coordinates_snake = [self.head_coordinates] + self.coordinates_snake[:self.length - 1]
 
     def update(self, direction):
+       # if not self.check_coordinates_and_borders():
         self.move_snake(direction)
         self.grow_up()
         self.blitme()
