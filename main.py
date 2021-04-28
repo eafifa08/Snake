@@ -10,11 +10,13 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('Game "Snake"')
 screen = pygame.display.set_mode((game_settings.screen_width, game_settings.screen_height))
 
-
-
 def set_difficulty(value, difficulty):
     print('value: ' + str(value) + ' difficulty: ' + str(difficulty))
     game_settings.set_difficulty(difficulty)
+
+def set_sound(value, sound_on):
+    print('value: ' + str(value) + ' sound_on: ' + str(sound_on))
+    game_settings.sound_on = sound_on
 
 def show_stats(snake, round_count):
     pygame.font.init()
@@ -106,6 +108,7 @@ def start_the_game():
 menu = pygame_menu.Menu('Snake by Sergey Meshkov', game_settings.screen_width, game_settings.screen_height, theme=pygame_menu.themes.THEME_BLUE)
 menu.add.button('Play', start_the_game)
 menu.add.selector('Difficulty :', [('Easy', 1), ('Normally', 2), ('Hard', 3)], onchange=set_difficulty)
+menu.add.selector('Sound :', [('OFF', False), ('ON', True)], onchange=set_sound)
 menu.add.text_input('Name :', default='Your Name')
 menu.add.button('Quit', pygame_menu.events.EXIT)
 menu.mainloop(screen)

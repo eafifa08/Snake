@@ -130,13 +130,15 @@ class Food(pygame.sprite.Sprite):
         pygame.init()
         self.types = ['food', 'bad', 'life']
         self.type = random.choices(self.types, weights=[15, 5, 1], k=1)[0]
-        self.apple_sound = pygame.mixer.Sound('media\\apple_sound.wav')
         self.game_settings = game_settings
         if self.type == 'food':
+            self.sound = pygame.mixer.Sound('media\\apple_sound.wav')
             self.image = pygame.image.load('media\\apple_red.png').convert_alpha()
         elif self.type == 'bad':
+            self.sound = pygame.mixer.Sound('media\\shit_sound.wav')
             self.image = pygame.image.load('media\\shit.png').convert_alpha()
         elif self.type == 'life':
+            self.sound = pygame.mixer.Sound('media\\life_sound.wav')
             self.image = pygame.image.load('media\\heart.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, (game_settings.screen_width) // game_settings.cell_size - 1) * game_settings.cell_size
@@ -150,16 +152,16 @@ class Food(pygame.sprite.Sprite):
     def update(self, snake):
         for c in snake.coordinates_snake:
             if [c[0], c[1]] == self.coordinates:
+                if self.game_settings.sound_on:
+                    self.sound.play()
                 if self.type == 'food':
                     self.eaten = True
-                    self.apple_sound.play()
                     snake.eaten += 1
                     snake.want_to_grow += 1
                     print('food eaten')
                     self.kill()
                 elif self.type == 'bad':
                     #self.eaten = True
-                    #self.apple_sound.play()
                     #snake.eaten += 1
                     snake.want_to_grow += 0
                     snake.life -= 1
@@ -167,7 +169,6 @@ class Food(pygame.sprite.Sprite):
                     self.kill()
                 elif self.type == 'life':
                     #self.eaten = True
-                    #self.apple_sound.play()
                     #snake.eaten += 1
                     snake.want_to_grow += 0
                     snake.life += 1
