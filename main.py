@@ -8,6 +8,9 @@ game_settings = settings.Settings()
 pygame.init()
 clock = pygame.time.Clock()
 pygame.display.set_caption('Game "Snake"')
+fail_sound = pygame.mixer.Sound('media\\fail_sound.wav')
+game_win_sound = pygame.mixer.Sound('media\\game_win_sound.wav')
+round_win_sound = pygame.mixer.Sound('media\\round_win_sound.wav')
 screen = pygame.display.set_mode((game_settings.screen_width, game_settings.screen_height))
 
 def set_difficulty(value, difficulty):
@@ -96,7 +99,13 @@ def start_the_round(round_count):
                 round_max_food_change -= 1
                 foods[i].deleted = True
         if snake.life <= 0:
+            if game_settings.sound_on:
+                fail_sound.play()
             menu.mainloop(screen)
+    if game_settings.sound_on and round_count == 2:
+        game_win_sound.play()
+    else:
+        round_win_sound.play()
 
 
 def start_the_game():

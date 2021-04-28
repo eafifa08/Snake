@@ -15,6 +15,7 @@ class Snake:
         self.eaten = 0
         self.want_to_grow = 0
         self.life = 3
+        self.sound = pygame.mixer.Sound('media\\shit_sound.wav')
 
     def set_coordinates_snake_center(self):
         self.length = 3
@@ -63,6 +64,8 @@ class Snake:
                 self.coordinates_snake[0][0] > self.game_settings.screen_width // self.game_settings.cell_size - 1 or \
                 self.coordinates_snake[0][1] < 0 or \
                 self.coordinates_snake[0][1] > self.game_settings.screen_height // self.game_settings.cell_size - 1:
+            if self.game_settings.sound_on:
+                self.sound.play()
             self.life -= 1
             return False
         else:
