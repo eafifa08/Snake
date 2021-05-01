@@ -132,11 +132,16 @@ class Food(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         pygame.init()
         self.types = ['food', 'bad', 'life']
+        self.fruits = ['apple', 'banan']
         self.type = random.choices(self.types, weights=[15, 5, 1], k=1)[0]
         self.game_settings = game_settings
         if self.type == 'food':
             self.sound = pygame.mixer.Sound('media\\apple_sound.wav')
-            self.image = pygame.image.load('media\\apple_red.png').convert_alpha()
+            self.fruit = random.choices(self.fruits, weights=[1, 1], k=1)[0]
+            if self.fruit == 'apple':
+                self.image = pygame.image.load('media\\apple_red.png').convert_alpha()
+            else:
+                self.image = pygame.image.load('media\\banan.png').convert_alpha()
         elif self.type == 'bad':
             self.sound = pygame.mixer.Sound('media\\shit_sound.wav')
             self.image = pygame.image.load('media\\shit.png').convert_alpha()
