@@ -15,7 +15,7 @@ class Snake:
         self.eaten = 0
         self.want_to_grow = 0
         self.life = 3
-        self.sound = pygame.mixer.Sound('media\\shit_sound.wav')
+        self.sound = pygame.mixer.Sound(game_settings.shit_sound_string)
 
     def set_coordinates_snake_center(self):
         self.length = 3
@@ -29,24 +29,17 @@ class Snake:
 
     def blitme(self):
         if self.direction == 'up':
-            myimage = pygame.image.load('media\\snake_head_up.png').convert_alpha()
+            myimage = pygame.image.load(self.game_settings.snake_head_up_string).convert_alpha()
         elif self.direction == 'down':
-            myimage = pygame.image.load('media\\snake_head_down.png').convert_alpha()
+            myimage = pygame.image.load(self.game_settings.snake_head_down_string).convert_alpha()
         elif self.direction == 'left':
-            myimage = pygame.image.load('media\\snake_head_left.png').convert_alpha()
+            myimage = pygame.image.load(self.game_settings.snake_head_left_string).convert_alpha()
         elif self.direction == 'right':
-            myimage = pygame.image.load('media\\snake_head_right.png').convert_alpha()
+            myimage = pygame.image.load(self.game_settings.snake_head_right_string).convert_alpha()
         self.screen.blit(myimage, (self.coordinates_snake[0][0] * self.game_settings.cell_size,
                                    self.coordinates_snake[0][1] * self.game_settings.cell_size))
         for i in range(1, self.length):
-            if self.coordinates_snake[i][2] == 'up':
-                bodyimage = pygame.image.load('media\\snake_body_green.png').convert_alpha()
-            elif self.coordinates_snake[i][2] == 'down':
-                bodyimage = pygame.image.load('media\\snake_body_green.png').convert_alpha()
-            elif self.coordinates_snake[i][2] == 'left':
-                bodyimage = pygame.image.load('media\\snake_body_green.png').convert_alpha()
-            elif self.coordinates_snake[i][2] == 'right':
-                bodyimage = pygame.image.load('media\\snake_body_green.png').convert_alpha()
+            bodyimage = pygame.image.load(self.game_settings.snake_body_green_string).convert_alpha()
             self.screen.blit(bodyimage, (self.coordinates_snake[i][0] * self.game_settings.cell_size,
                                        self.coordinates_snake[i][1] * self.game_settings.cell_size))
 
@@ -132,22 +125,26 @@ class Food(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         pygame.init()
         self.types = ['food', 'bad', 'life']
-        self.fruits = ['apple', 'banan']
+        self.fruits = ['apple', 'banan', 'pear']
         self.type = random.choices(self.types, weights=[15, 5, 1], k=1)[0]
         self.game_settings = game_settings
         if self.type == 'food':
-            self.sound = pygame.mixer.Sound('media\\apple_sound.wav')
-            self.fruit = random.choices(self.fruits, weights=[1, 1], k=1)[0]
+            self.sound = pygame.mixer.Sound(game_settings.apple_sound_string)
+            self.fruit = random.choices(self.fruits, weights=[1, 1, 1], k=1)[0]
             if self.fruit == 'apple':
-                self.image = pygame.image.load('media\\apple_red.png').convert_alpha()
+                self.image = pygame.image.load(game_settings.apple_red_string).convert_alpha()
+            elif self.fruit == 'banan':
+                self.image = pygame.image.load(game_settings.banan_string).convert_alpha()
+            elif self.fruit == 'pear':
+                self.image = pygame.image.load(game_settings.pear_string).convert_alpha()
             else:
-                self.image = pygame.image.load('media\\banan.png').convert_alpha()
+                self.image = pygame.image.load(game_settings.apple_red_string).convert_alpha()
         elif self.type == 'bad':
-            self.sound = pygame.mixer.Sound('media\\shit_sound.wav')
-            self.image = pygame.image.load('media\\shit.png').convert_alpha()
+            self.sound = pygame.mixer.Sound(game_settings.shit_sound_string)
+            self.image = pygame.image.load(game_settings.shit_string).convert_alpha()
         elif self.type == 'life':
-            self.sound = pygame.mixer.Sound('media\\life_sound.wav')
-            self.image = pygame.image.load('media\\heart.png').convert_alpha()
+            self.sound = pygame.mixer.Sound(game_settings.life_sound_string)
+            self.image = pygame.image.load(game_settings.heart_string).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, (game_settings.screen_width) // game_settings.cell_size - 1) * game_settings.cell_size
         self.rect.y = random.randint(0,

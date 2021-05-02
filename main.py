@@ -3,14 +3,18 @@ import pygame_menu
 import sys
 import Logic
 import settings
+import time
+import os
+
 
 game_settings = settings.Settings()
 pygame.init()
 clock = pygame.time.Clock()
 pygame.display.set_caption('Game "Snake"')
-fail_sound = pygame.mixer.Sound('media\\fail_sound.wav')
-game_win_sound = pygame.mixer.Sound('media\\game_win_sound.wav')
-round_win_sound = pygame.mixer.Sound('media\\round_win_sound.wav')
+print(str(game_settings.fail_sound_string))
+fail_sound = pygame.mixer.Sound(game_settings.fail_sound_string)
+game_win_sound = pygame.mixer.Sound(game_settings.game_win_sound_string)
+round_win_sound = pygame.mixer.Sound(game_settings.game_win_sound_string)
 screen = pygame.display.set_mode((game_settings.screen_width, game_settings.screen_height))
 
 def set_difficulty(value, difficulty):
@@ -102,16 +106,22 @@ def start_the_round(round_count):
             if game_settings.sound_on:
                 fail_sound.play()
             menu.mainloop(screen)
-    if game_settings.sound_on and round_count == 2:
-        game_win_sound.play()
-    else:
-        round_win_sound.play()
+
+    if game_settings.sound_on:
+        if round_count == 2:
+            game_win_sound.play()
+        else:
+            round_win_sound.play()
 
 
 def start_the_game():
+    start_time = time.time()
     start_the_round(0)
     start_the_round(1)
     start_the_round(2)
+    print('time = ' + str(time.time()-start_time))
+def see_records():
+    pass
 
 
 menu = pygame_menu.Menu('Snake by Sergey Meshkov', game_settings.screen_width, game_settings.screen_height, theme=pygame_menu.themes.THEME_BLUE)
@@ -119,5 +129,6 @@ menu.add.button('Play', start_the_game)
 menu.add.selector('Difficulty :', [('Easy', 1), ('Normally', 2), ('Hard', 3)], onchange=set_difficulty)
 menu.add.selector('Sound :', [('OFF', False), ('ON', True)], onchange=set_sound)
 menu.add.text_input('Name :', default='Your Name')
+menu.add.button('Records', see_records)
 menu.add.button('Quit', pygame_menu.events.EXIT)
 menu.mainloop(screen)
