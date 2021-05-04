@@ -150,7 +150,6 @@ class Food(pygame.sprite.Sprite):
         self.rect.y = random.randint(0,
                                      (game_settings.screen_height) // game_settings.cell_size - 1) * game_settings.cell_size
         self.coordinates = [self.rect.left // game_settings.cell_size, self.rect.top // game_settings.cell_size]
-        print(str(self.type) + 'coordinates=' + str(self.coordinates))
         self.eaten = False
         self.deleted = False
 
@@ -163,19 +162,16 @@ class Food(pygame.sprite.Sprite):
                     self.eaten = True
                     snake.eaten += 1
                     snake.want_to_grow += 1
-                    print('food eaten')
                     self.kill()
                 elif self.type == 'bad':
                     #self.eaten = True
                     #snake.eaten += 1
                     snake.want_to_grow += 0
                     snake.life -= 1
-                    print('shit eaten')
                     self.kill()
                 elif self.type == 'life':
                     #self.eaten = True
                     #snake.eaten += 1
                     snake.want_to_grow += 0
                     snake.life += 1
-                    print('life eaten')
                     self.kill()

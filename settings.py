@@ -6,8 +6,9 @@ class Settings():
     """Класс для хранения настроек игры Snake"""
     def __init__(self):
         """Инициализирует настройки игры"""
-        self.screen_width = 600
-        self.screen_height = 600
+        self.username = 'test_name'
+        self.screen_width = 400
+        self.screen_height = 400
         self.difficulty = 1
         if self.difficulty == 1:
             self.fps = 4
@@ -17,7 +18,7 @@ class Settings():
             self.fps = 6
         self.cell_size = 20
         self.max_food = 1
-        self.round_max_foods = [10, 15, 16]
+        self.round_max_foods = [1, 1, 1]
         self.green = (19, 71, 27)
         self.fpss = [self.fps, self.fps * 2, self.fps * 3]
         self.sound_on = False
@@ -39,6 +40,7 @@ class Settings():
         self.shit_string = os.path.join(os.path.abspath((os.curdir)), 'media', 'shit.png')
         self.life_sound_string = os.path.join(os.path.abspath((os.curdir)), 'media', 'life_sound.wav')
         self.heart_string = os.path.join(os.path.abspath((os.curdir)), 'media', 'heart.png')
+        self.PATH_TO_DATABASE = os.path.join(os.path.abspath((os.curdir)), 'Snake_database.db')
 
 
     def set_difficulty(self, difficulty):

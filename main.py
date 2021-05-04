@@ -5,6 +5,7 @@ import Logic
 import settings
 import time
 import os
+import Database
 
 
 game_settings = settings.Settings()
@@ -21,9 +22,15 @@ def set_difficulty(value, difficulty):
     print('value: ' + str(value) + ' difficulty: ' + str(difficulty))
     game_settings.set_difficulty(difficulty)
 
+def set_username(text):
+    game_settings.username = text
+    print(text)
+
+
 def set_sound(value, sound_on):
     print('value: ' + str(value) + ' sound_on: ' + str(sound_on))
     game_settings.sound_on = sound_on
+
 
 def show_stats(snake, round_count):
     pygame.font.init()
@@ -57,8 +64,9 @@ def start_the_round(round_count):
     for i in range(game_settings.max_food):
         food = Logic.Food(game_settings)
         while food.type != 'food':
-            foods.append(food)
-            food_sprite.add(food)
+            if all(food.coordinates != x.coordinates for x in foods):
+                foods.append(food)
+                food_sprite.add(food)
             food = Logic.Food(game_settings)
         foods.append(food)
         food_sprite.add(food)
@@ -119,7 +127,12 @@ def start_the_game():
     start_the_round(0)
     start_the_round(1)
     start_the_round(2)
-    print('time = ' + str(time.time()-start_time))
+    time_of_game = time.time()-start_time
+    print('time = ' + str(time_of_game))
+    connection_sqlite = Database.create_connection(game_settings.PATH_TO_DATABASE)
+    Database.write_game_stat(connection_sqlite, game_settings.username, time_of_game)
+    
+    
 def see_records():
     pass
 
@@ -128,7 +141,9 @@ menu = pygame_menu.Menu('Snake by Sergey Meshkov', game_settings.screen_width, g
 menu.add.button('Play', start_the_game)
 menu.add.selector('Difficulty :', [('Easy', 1), ('Normally', 2), ('Hard', 3)], onchange=set_difficulty)
 menu.add.selector('Sound :', [('OFF', False), ('ON', True)], onchange=set_sound)
-menu.add.text_input('Name :', default='Your Name')
+menu.add.text_input('Name :', textinput_id='text_input_name', default='Your name', onchange=set_username)
+text_input_name = menu.get_widget('text_input_name')
+print(text_input_name.get_value())
 menu.add.button('Records', see_records)
 menu.add.button('Quit', pygame_menu.events.EXIT)
 menu.mainloop(screen)
