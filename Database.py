@@ -5,7 +5,6 @@ def create_connection(path):
     connection = None
     try:
         connection = sqlite3.connect(path)
-        print("Connection to SQLite DB successful")
     except sqlite3.Error as e:
         print(f"The error '{e}' occurred")
     return connection
@@ -16,7 +15,6 @@ def execute_query(connection, query, name, result):
     try:
         cursor.execute(query, (name, result))
         connection.commit()
-        print("Query executed successfully")
     except sqlite3.Error as e:
         print(f"The error in execute_query '{e}' occurred")
 
@@ -27,7 +25,6 @@ def execute_read_query(connection, query):
     try:
         cursor.execute(query)
         result = cursor.fetchall()
-        print('execute_read_query success')
         return result
     except sqlite3.Error as e:
         print(f"The error in execute_read_query '{e}' occurred")
