@@ -7,8 +7,8 @@ class Settings():
     def __init__(self):
         """Инициализирует настройки игры"""
         self.username = 'Your nick'
-        self.screen_width = 600
-        self.screen_height = 400
+        self.screen_width = 500
+        self.screen_height = 500
         self.difficulty = 1
         if self.difficulty == 1:
             self.fps = 4

@@ -145,7 +145,9 @@ def back_to_main_menu():
     menu.mainloop(screen)
 
 
-menu = pygame_menu.Menu('Snake by Sergey Meshkov', game_settings.screen_width, game_settings.screen_height, theme=pygame_menu.themes.THEME_BLUE)
+menu = pygame_menu.Menu('''Snake by Sergey Meshkov''', game_settings.screen_width, game_settings.screen_height, theme=pygame_menu.themes.THEME_BLUE)
+menu.add.label('''Rules: eat fruits, don't eat shit''')
+menu.add.label('''Controls: press arrows''')
 menu.add.button('Play', start_the_game)
 menu.add.selector('Difficulty :', [('Easy', 1), ('Normally', 2), ('Hard', 3)], onchange=set_difficulty)
 menu.add.selector('Sound :', [('OFF', False), ('ON', True)], onchange=set_sound)
