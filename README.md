@@ -1,4 +1,4 @@
-# Snake
+# Snake by Sergey Meshkov
 Snake - python game
 not standard modules: pygame, pygame_menu
 Practice in python, pygame, sqlite
