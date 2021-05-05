@@ -42,7 +42,7 @@ def show_stats(snake, round_count):
 
 
 def draw_lines(is_drawing_lines):
-    """Рисование сетки из клеток на фоне: True или False"""
+    """Рисование сетки из клеток на фоне: True или  False"""
     if is_drawing_lines:
         for i in range(0, game_settings.screen_width):
             pygame.draw.line(screen, pygame.color.THECOLORS['blue'], (i * game_settings.cell_size, 0), (i * game_settings.cell_size,  game_settings.screen_height), 2)
