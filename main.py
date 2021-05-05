@@ -134,7 +134,7 @@ def see_records():
     menu_results = pygame_menu.Menu('Snake by Sergey Meshkov', game_settings.screen_width, game_settings.screen_height,
                             theme=pygame_menu.themes.THEME_BLUE)
     table = menu_results.add.table()
-    num_rows = min(10, len(besttimes))
+    num_rows = min(5, len(besttimes))
     for i in range(num_rows):
         table.add_row((i+1, besttimes[i][0], "{:10.4f}".format(besttimes[i][1])+" sec"))
     menu_results.add.button("Back", back_to_main_menu)
