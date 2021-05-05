@@ -12,23 +12,19 @@ game_settings = settings.Settings()
 pygame.init()
 clock = pygame.time.Clock()
 pygame.display.set_caption('Game "Snake"')
-print(str(game_settings.fail_sound_string))
 fail_sound = pygame.mixer.Sound(game_settings.fail_sound_string)
 game_win_sound = pygame.mixer.Sound(game_settings.game_win_sound_string)
 round_win_sound = pygame.mixer.Sound(game_settings.game_win_sound_string)
 screen = pygame.display.set_mode((game_settings.screen_width, game_settings.screen_height))
 
 def set_difficulty(value, difficulty):
-    print('value: ' + str(value) + ' difficulty: ' + str(difficulty))
     game_settings.set_difficulty(difficulty)
 
 def set_username(text):
     game_settings.username = text
-    print(text)
 
 
 def set_sound(value, sound_on):
-    print('value: ' + str(value) + ' sound_on: ' + str(sound_on))
     game_settings.sound_on = sound_on
 
 
@@ -128,22 +124,33 @@ def start_the_game():
     start_the_round(1)
     start_the_round(2)
     time_of_game = time.time()-start_time
-    print('time = ' + str(time_of_game))
     connection_sqlite = Database.create_connection(game_settings.PATH_TO_DATABASE)
     Database.write_game_stat(connection_sqlite, game_settings.username, time_of_game)
     
     
 def see_records():
-    pass
+    connection_sqlite = Database.create_connection(game_settings.PATH_TO_DATABASE)
+    besttimes = Database.read_10_besttimes(connection_sqlite)
+    menu_results = pygame_menu.Menu('Snake by Sergey Meshkov', game_settings.screen_width, game_settings.screen_height,
+                            theme=pygame_menu.themes.THEME_BLUE)
+    table = menu_results.add.table()
+    num_rows = min(10, len(besttimes))
+    for i in range(num_rows):
+        table.add_row((i+1, besttimes[i][0], "{:10.4f}".format(besttimes[i][1])+" sec"))
+    menu_results.add.button("Back", back_to_main_menu)
+    menu_results.mainloop(screen)
+
+
+def back_to_main_menu():
+    menu.mainloop(screen)
 
 
 menu = pygame_menu.Menu('Snake by Sergey Meshkov', game_settings.screen_width, game_settings.screen_height, theme=pygame_menu.themes.THEME_BLUE)
 menu.add.button('Play', start_the_game)
 menu.add.selector('Difficulty :', [('Easy', 1), ('Normally', 2), ('Hard', 3)], onchange=set_difficulty)
 menu.add.selector('Sound :', [('OFF', False), ('ON', True)], onchange=set_sound)
-menu.add.text_input('Name :', textinput_id='text_input_name', default='Your name', onchange=set_username)
+menu.add.text_input('Name :', textinput_id='text_input_name', default='Your nick', onchange=set_username)
 text_input_name = menu.get_widget('text_input_name')
-print(text_input_name.get_value())
 menu.add.button('Records', see_records)
 menu.add.button('Quit', pygame_menu.events.EXIT)
 menu.mainloop(screen)

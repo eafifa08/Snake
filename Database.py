@@ -20,6 +20,7 @@ def execute_query(connection, query, name, result):
     except sqlite3.Error as e:
         print(f"The error in execute_query '{e}' occurred")
 
+
 def execute_read_query(connection, query):
     cursor = connection.cursor()
     result = None
@@ -30,6 +31,7 @@ def execute_read_query(connection, query):
         return result
     except sqlite3.Error as e:
         print(f"The error in execute_read_query '{e}' occurred")
+
 
 def read_user_stat(conn, name):
     query = f"""
@@ -46,8 +48,24 @@ def read_user_stat(conn, name):
         return None
 
 
+def read_10_besttimes(conn):
+    query = f"""
+    SELECT name, besttime
+    FROM Records
+    ORDER BY besttime ASC
+    """
+    user_stats = execute_read_query(conn, query)
+    if len(user_stats) > 0:
+        return user_stats
+    else:
+        return None
+
+
 def write_game_stat(connection, username, result):
-    readed_info = read_user_stat(connection, username)[0]
+    try:
+        readed_info = read_user_stat(connection, username)[0]
+    except TypeError:
+        readed_info = None
     if readed_info == None:
         query = f"""
                         INSERT INTO
@@ -64,4 +82,4 @@ def write_game_stat(connection, username, result):
                 SET besttime=?
                 WHERE name=?;
                 """
-            execute_query(connection, query, username, result)
+            execute_query(connection, query, result, username)

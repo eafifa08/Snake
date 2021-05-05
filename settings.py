@@ -6,8 +6,8 @@ class Settings():
     """Класс для хранения настроек игры Snake"""
     def __init__(self):
         """Инициализирует настройки игры"""
-        self.username = 'test_name'
-        self.screen_width = 400
+        self.username = 'Your nick'
+        self.screen_width = 600
         self.screen_height = 400
         self.difficulty = 1
         if self.difficulty == 1:
