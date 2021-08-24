@@ -7,8 +7,18 @@ def create_connection(path):
         connection = sqlite3.connect(path)
     except sqlite3.Error as e:
         print(f"The error '{e}' occurred")
+    init_database(connection)
     return connection
 
+
+def init_database(connection):
+    cursor = connection.cursor()
+    try:
+        query = 'CREATE TABLE IF NOT EXISTS Records (name TEXT, besttime REAL);'
+        cursor.execute(query)
+        connection.commit()
+    except sqlite3.Error as e:
+        print(f"The error in execute_query '{e}' occurred")
 
 def execute_query(connection, query, name, result):
     cursor = connection.cursor()

@@ -18,7 +18,7 @@ class Settings():
             self.fps = 6
         self.cell_size = 20
         self.max_food = 1
-        self.round_max_foods = [7, 10, 12]
+        self.round_max_foods = [1, 1, 1]
         self.green = (19, 71, 27)
         self.fpss = [self.fps, self.fps * 2, self.fps * 3]
         self.sound_on = False
